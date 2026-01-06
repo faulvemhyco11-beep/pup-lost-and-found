@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PUP Lost & Found Management System</title>
+
+  <!-- Professional Styling -->
+  <style>
+    :root {
+      --maroon: #800000;
+      --maroon-dark: #5c0000;
+      --gray-light: #f4f4f4;
+      --gray: #e0e0e0;
+      --text-dark: #222;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gray-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--maroon);
+      color: var(--white);
+      padding: 1.2rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    nav {
+      background: var(--maroon-dark);
+      display: flex;
+      gap: 1rem;
+      padding: 0.7rem 2rem;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 0.95rem;
+      cursor: pointer;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+    }
+
+    nav button:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    section {
+      display: none;
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      color: var(--maroon);
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+      max-width: 500px;
+    }
+
+    input, textarea, select {
+      padding: 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--gray);
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button.submit {
+      background: var(--maroon);
+      color: var(--white);
+      border: none;
+      padding: 0.7rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button.submit:hover {
+      background: var(--maroon-dark);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      border: 1px solid var(--gray);
+      border-radius: 6px;
+      padding: 1rem;
+      background: #fff;
+    }
+
+    .card h3 {
+      color: var(--maroon);
+      margin-bottom: 0.4rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--gray);
+      padding: 0.2rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 3px;
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      background: var(--maroon-dark);
+      color: var(--white);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    footer strong {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Polytechnic University of the Philippines</h1>
+  <p>Lost & Found Management System</p>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">Home</button>
+  <button onclick="showSection('report-lost')">Report Lost</button>
+  <button onclick="showSection('report-found')">Report Found</button>
+  <button onclick="showSection('items')">View Items</button>
+  <button onclick="showSection('about')">About</button>
+</nav>
+
+<main>
+
+  <section id="home" class="active">
+    <h2>Welcome</h2>
+    <p>
+      The <strong>PUP Lost & Found Management System</strong> is a centralized platform designed to help students, faculty, and staff report, track, and recover lost items within the university.
+    </p>
+    <br />
+    <p>
+      This system improves transparency, reduces lost property incidents, and ensures a safer campus environment.
+    </p>
+  </section>
+
+  <section id="report-lost">
+    <h2>Report Lost Item</h2>
+    <form onsubmit="addItem(event, 'Lost')">
+      <input type="text" placeholder="Item Name" required />
+      <textarea placeholder="Description" required></textarea>
+      <input type="text" placeholder="Last Seen Location" required />
+      <input type="file" />
+      <button class="submit">Submit Report</button>
+    </form>
+  </section>
+
+  <section id="report-found">
+    <h2>Report Found Item</h2>
+    <form onsubmit="addItem(event, 'Found')">
+      <input type="text" placeholder="Item Name" required />
+      <textarea placeholder="Description" required></textarea>
+      <input type="text" placeholder="Found Location" required />
+      <input type="file" />
+      <button class="submit">Submit Report</button>
+    </form>
+  </section>
+
+  <section id="items">
+    <h2>Lost & Found Items</h2>
+    <div class="cards" id="itemList"></div>
+  </section>
+
+  <section id="about">
+    <h2>About the System</h2>
+    <p>
+      This website was developed as an academic project to demonstrate a complete Lost and Found Management System using modern web design principles.
+    </p>
+    <br />
+    <p><strong>School:</strong> Polytechnic University of the Philippines</p>
+    <p><strong>Group:</strong> Group 6</p>
+    <p><strong>Creators:</strong></p>
+    <ul>
+      <li>Mhyco Gabrielle Faulve</li>
+      <li>Dave Valenzuela</li>
+      <li>Glayza Malan</li>
+      <li>Nathaniel Alibio</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    &copy; 2026 Polytechnic University of the Philippines | Lost & Found System<br />
+    <strong>Group 6</strong>
+  </p>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const itemList = document.getElementById('itemList');
+
+  function showSection(id) {
+    sections.forEach(sec => sec.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function addItem(event, type) {
+    event.preventDefault();
+    const form = event.target;
+    const name = form[0].value;
+    const desc = form[1].value;
+    const loc = form[2].value;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <span class="tag">${type}</span>
+      <h3>${name}</h3>
+      <p>${desc}</p>
+      <p><strong>Location:</strong> ${loc}</p>
+    `;
+
+    itemList.prepend(card);
+    form.reset();
+    showSection('items');
+  }
+</script>
+
+</body>
+</html>
